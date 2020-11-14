@@ -133,7 +133,7 @@
       echo '<script>'.'testList.push({testID:"'.$testID.'",testDate:new Date('.$testDate.'),patUserName:"'.$patUsername.'",patUserPassword:"'.$patPwsd.'",patName:"'.$patName.'",patType:"'.$patType.'",patSymptom:"'.$symptoms.'",resultDate:'.$resultDate.',result:'.$patResult.',patStatus:"'.$status.'"})'.'</script>';
     }
   } else {
-    echo "0 results";
+    echo '<script>alert("There is no test recorded yet.");</script>';
   }
   $conn->close();
   ?>
@@ -289,7 +289,7 @@
         <div class="modal-content">
     
           <!-- Modal Header -->
-          <form onsubmit="createNewTest(new Date())" id="test-form">
+          <form id="test-form" Method="GET" action="recordTest.php">
           <div class="modal-header">
             <h4 class="modal-title">Test Information</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -301,31 +301,31 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputpatuname">Patient Username</label>
-                  <input type="text" class="form-control" id="inputpatuname" placeholder="patient username" onfocusout="checkExistingUser()" required>
+                  <input type="text" class="form-control" id="inputpatuname" name="inputpatuname" placeholder="patient username" onfocusout="checkExistingUser()" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputpatpwsd">Password</label>
-                  <input type="text" class="form-control" id="inputpatpwsd" placeholder="Password" required>
+                  <input type="text" class="form-control" id="inputpatpwsd" name ="inputpatpwsd" placeholder="Password" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputpatname">Patient Name</label>
-                <input type="text" class="form-control" id="inputpatname" placeholder="patient name" required>
+                <input type="text" class="form-control" id="inputpatname" name="inputpatname" placeholder="patient name" required>
               </div>
               <div class="form-group">
                 <label for="selectpattype">Patient Type</label>
-                <select class="custom-select my-1 mr-sm-2" id="selectpattype" required>
+                <select class="custom-select my-1 mr-sm-2" id="selectpattype" name="selectpattype" required>
                   <option selected value="">Please Select</option>
-                  <option value="suspected">suspected</option>
-                  <option value="returnee">returnee</option>
-                  <option value="quarantined">quarantined</option>
-                  <option value="close contact">close contact</option>
-                  <option value="infected">infected</option>
+                  <option value = 1 >suspected</option>
+                  <option value = 2 >returnee</option>
+                  <option value = 3 >quarantined</option>
+                  <option value = 4 >close contact</option>
+                  <option value = 5 >infected</option>
                 </select>
               </div>
               <div class="form-group"> 
                 <label for="inputsymptoms">Symptoms</label>
-                <textarea class="form-control" id="inputsymptoms" rows="3" required></textarea>
+                <textarea class="form-control" id="inputsymptoms" name="inputsymptoms" rows="3" required></textarea>
               </div>
               <button type="submit" class="btn btn-success">Create</button>
               <button type="reset" class="btn btn-danger">Reset</button>

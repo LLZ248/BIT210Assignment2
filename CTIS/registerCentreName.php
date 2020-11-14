@@ -1,14 +1,30 @@
 <?php
 session_start();
+if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
+  // no username and usertype
+  header("Location: http://localhost/CTIS");//back to login page
+}
+if(!($_SESSION['userType'] == 'Manager')){
+    echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+}
 $oldCentreID = $_SESSION['centreID'];
 
 //generate new centreID to replace the old temparory centreID
-$cName = $_POST['cName'];
+$cName = ucwords($_POST['cName']);
+$expression = "/[a-zA-Z\s]{5,50}/";//at least 6 characters, maximum is 50
+
+if(!preg_match($expression,$cName)){
+  echo '<script>alert("This name is invalid. Aplhabet Only. 6-50 Characters!.");</script>';
+  echo '<script>window.location.href="registerCentre.php";</script>';
+  exit();
+}
+
 $centreID = substr($cName,0,3);
 $centreID = $centreID.substr($cName,-1);
 for($i=0;$i<4;$i++){
     $centreID = $centreID . rand(0,9);
 }
+$centreID = strtoupper($centreID);
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -24,7 +40,7 @@ if ($conn->connect_error) {
 $sql = "UPDATE test_centre SET centreID = '$centreID',centreName = '$cName' WHERE ". 'centreID = \'' .$oldCentreID .'\'';
 if ($conn->query($sql) === TRUE) {
   echo "Record updated successfully";
-  $_SESSION['centreID'] = $oldCentreID;//replace the old centreID with new centreID
+  $_SESSION['centreID'] = $centreID;//replace the session centreID with new centreID
   echo '<script>alert("The test centre is updated\nName:'.$cName.'\nTestCentreID:'.$centreID.'");</script>';
   echo '<script>window.location.href="testReport.php";</script>';
 } else {

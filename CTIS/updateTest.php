@@ -75,10 +75,11 @@
           </li>
         </ul>
         <figure class="mr-3 mt-2">
-          <img src="picture/user.png" alt="user" width = 50 />
+          <img src="picture/user.png" alt="user" width = 50 class="ml-lg-5"/>
           <figcaption>
              <?php
               echo $_SESSION['userID'];
+              echo '('.$_SESSION['centreID'].')';
             ?>
           </figcaption>
         </figure>
