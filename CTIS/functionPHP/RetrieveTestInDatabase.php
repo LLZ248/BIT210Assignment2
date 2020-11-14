@@ -85,11 +85,11 @@ if ($result->num_rows > 0) {
         case 0:
           $status = "pending";break;
         case 1:
-          echo'<script>alert("This test is already completed!");window.history.back();</script>';exit();
+          echo 'completed';exit();//the test is already completed, return completed as error code 
       }
       echo "$testID|$testDate|$patUsername|$patPwsd|$patName|$patType|$symptoms|$resultDate|$patResult|$status";
   }
-} else {
+} else {//no such test
   echo "";
 }
 $conn->close();

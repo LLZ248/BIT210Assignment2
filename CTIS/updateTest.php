@@ -154,6 +154,7 @@ if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
 }
 ?>
 <script>
+  //Using AJAX here
 function existingTest() {
   targetID = document.getElementById("targetTestID").value;
   if (targetID != "") {
@@ -163,8 +164,19 @@ function existingTest() {
       if (this.readyState == 4 && this.status == 200) {
         respond = this.responseText;
         if (respond != ""){
-          respondList = respond.split("|");
-          generateTestTableForUpdate(respondList[0],respondList[1],respondList[2],respondList[3],respondList[4],respondList[5],respondList[6],respondList[9]);
+          if(respond == "completed"){// error code is completed
+            //the test is already completed and the user can't modify the result anymore
+            alert("the Test is alreay completed!");
+          }else{
+            //valid respond
+            respondList = respond.split("|");
+            //generate the form and displaying the test details
+            generateTestTableForUpdate(respondList[0],respondList[1],respondList[2],respondList[3],respondList[4],respondList[5],respondList[6],respondList[9]);
+          }
+        }else{
+          //There is no test with this testID in the system
+          //or the test is in another centre
+          alert("There is no test with this test ID!");
         }
       }
     }

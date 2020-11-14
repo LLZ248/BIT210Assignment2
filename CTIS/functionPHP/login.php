@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 $user = $_POST['userName'];
 $password = $_POST['userPwsd'];
 $userType = $_POST['user'];
-
+//manger
 if($userType == "Manager"){
     $sql = "SELECT officerID,officerPwsd,centreID FROM centre_officer WHERE officerID='$user' AND position=1";
     $result = $conn->query($sql);
@@ -41,7 +41,7 @@ if($userType == "Manager"){
                     }
                   }
                
-              }else{
+              }else{//wrong password
                 echo '<script>alert("Wrong password");window.history.back();</script>';
               }
         }
@@ -49,6 +49,7 @@ if($userType == "Manager"){
         echo '<script>alert("Invalid User");window.history.back();</script>';
     }
 }
+//tester
 if($userType == "Tester"){
     $sql = "SELECT officerID,officerPwsd,centreID FROM centre_officer WHERE officerID='$user' AND position=0";
     $result = $conn->query($sql);
@@ -60,7 +61,7 @@ if($userType == "Tester"){
                 $_SESSION['userID'] = $row['officerID'];
                 $_SESSION['centreID'] = $row['centreID'];
                 header("Location: http://localhost/CTIS/testReport.php");
-              }else{
+              }else{//wrong password
                 echo '<script>alert("Wrong password");window.history.back();</script>'; 
               }
         }
@@ -70,6 +71,7 @@ if($userType == "Tester"){
         
     }
 }
+//patient
 if($userType == "Patient"){
     $sql = "SELECT patUsername,patPwsd FROM patient WHERE patUsername='$user'";
     $result = $conn->query($sql);
@@ -80,7 +82,7 @@ if($userType == "Patient"){
                 $_SESSION['userType'] = 'Patient';
                 $_SESSION['userID'] = $row['patUsername'];
                 header("Location: http://localhost/CTIS/testHistory.php");
-              }else{
+              }else{//wrong password
                 echo '<script>alert("Wrong password");window.history.back();</script>'; 
               }
         }

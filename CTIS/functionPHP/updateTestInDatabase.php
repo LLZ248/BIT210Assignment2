@@ -18,7 +18,7 @@ $username = "root";
 $password = "";
 $dbname = "ctis";
 
-if(!($result == 0 || $result == 1)){
+if(!($result == 0 || $result == 1)){//result is neither 1 nor 0
     echo'<script>alert("Invalid Result");window.history.back();</script>';exit();
 }
 
@@ -28,13 +28,13 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID' AND status = 0";
+// the test must be pending and same centre ID as user's
+$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID' AND status = 0 AND centreID = ".$_SESSION['centreID'].'"';
 
 if ($conn->query($sql) === TRUE) {
   echo '<script>alert("Record updated successfully")</script>';
   echo '<script>location.replace("http://localhost/ctis/updateTest.php");</script>';
-} else {
+} else {//unlikely to happend unless user manually edit the page
   echo "Error updating record: " . $conn->error;
 }
 
