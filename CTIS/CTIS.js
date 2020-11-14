@@ -142,6 +142,7 @@ function checkExistingUser(){
       document.getElementById("inputpatuname").value = testlist[i].cells[2].innerHTML;
       document.getElementById('inputpatname').value = testlist[i].cells[3].innerHTML;
       document.getElementById('inputpatpwsd').value = testlist[i].cells[4].innerHTML;
+      document.getElementById('selectpattype').focus();
       break;
     }
   }

@@ -297,11 +297,11 @@
     
           <!-- Modal body -->
           <div class="modal-body">
-            
+              <div class="text-danger pb-4">*If the patient is existing patient, Type in the patient's username and proceed will auto-fill his/her name and password<br>*Every field must be filled</div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputpatuname">Patient Username</label>
-                  <input type="text" class="form-control" id="inputpatuname" name="inputpatuname" placeholder="patient username" onfocusout="checkExistingUser()" required>
+                  <input type="text" class="form-control" id="inputpatuname" name="inputpatuname" placeholder="patient username" onfocusout="existingPatient(this.value)" pattern="[A-Z0-9]{8}" title="8 letters(Uppercase alphabets and number only)" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputpatpwsd">Password</label>
@@ -337,6 +337,7 @@
       </div>
     </div>
   </div>
+  
 	
   <!--Table that show every tests-->
   <table id="patient-table" class="table table-striped table-bordered bg-light">
@@ -375,6 +376,28 @@
 <script>
   //generate the tests retrieved from the database
   generateTestTable();
+</script>
+<script>
+function existingPatient(str) {
+  if (str != "") {
+    var respond = "";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        respond= this.responseText;
+        if (respond != ""){
+        respondList = respond.split("|");
+        document.getElementById("inputpatname").value = respondList[0];
+        document.getElementById("inputpatpwsd").value = respondList[1];
+      }
+      }
+    };
+    xmlhttp.open("GET","functionPHP/searchExistingPatient.php?uname="+str,true);
+    xmlhttp.send();
+    
+    
+  }
+}
 </script>
 <?php
 if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){

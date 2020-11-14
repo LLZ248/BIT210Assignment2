@@ -79,7 +79,7 @@ CONSTRAINT test_fk1 FOREIGN KEY (patUsername) REFERENCES PATIENT (patUsername) O
 CONSTRAINT test_fk2 FOREIGN KEY(centreID) REFERENCES TEST_CENTRE(centreID) ON UPDATE CASCADE
 );
 
-
+/*Insert some dummy datas*/
 INSERT INTO TEST_CENTRE (centreID,centreName) VALUES ('C0001','Ali Test Centre');
 INSERT INTO TEST_CENTRE (centreID) VALUES ('C0002');
 INSERT INTO TEST_CENTRE (centreID) VALUES ('C0003');
@@ -117,4 +117,4 @@ INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Jaydan Ho','JNHO6325'
 INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Maximilian Hale','MALE5214','abc123');
 INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Raihan Gilliam','RIAM9874','abc123');
 
-INSERT INTO TEST (testID,testDate,patType,symptoms,status,patUsername,centreID) VALUES ('TCG5420200304','2020-01-11 12:25:01',1,'too happy',0,'KARK4512','C0001');
+INSERT INTO TEST (testID,testDate,patType,symptoms,status,patUsername,centreID) VALUES ('TCG54200304','2020-01-11 12:25:01',1,'too happy',0,'KARK4512','C0001');
