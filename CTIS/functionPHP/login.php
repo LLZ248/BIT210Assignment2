@@ -42,11 +42,11 @@ if($userType == "Manager"){
                   }
                
               }else{
-                echo '<script>alert("Wrong password");window.location.href="index.html";</script>';
+                echo '<script>alert("Wrong password");window.history.back();</script>';
               }
         }
     } else {
-        echo '<script>alert("Invalid User");window.location.href="index.html";</script>';
+        echo '<script>alert("Invalid User");window.history.back();</script>';
     }
 }
 if($userType == "Tester"){
@@ -59,14 +59,14 @@ if($userType == "Tester"){
                 $_SESSION['userType'] = 'Tester';
                 $_SESSION['userID'] = $row['officerID'];
                 $_SESSION['centreID'] = $row['centreID'];
-                header("Location: http://localhost/CTIS/testReport.html");
+                header("Location: http://localhost/CTIS/testReport.php");
               }else{
-                echo '<script>alert("Wrong password");window.location.href="index.html";</script>'; 
+                echo '<script>alert("Wrong password");window.history.back();</script>'; 
               }
         }
     } else {
         
-        echo '<script>alert("Invalid User");window.location.href="index.html";</script>';
+        echo '<script>alert("Invalid User");window.history.back();</script>';
         
     }
 }
@@ -81,11 +81,11 @@ if($userType == "Patient"){
                 $_SESSION['userID'] = $row['patUsername'];
                 header("Location: http://localhost/CTIS/testHistory.php");
               }else{
-                echo '<script>alert("Wrong password");window.location.href="index.html";</script>'; 
+                echo '<script>alert("Wrong password");window.history.back();</script>'; 
               }
         }
     } else {
-        echo '<script>alert("Invalid User");window.location.href="index.html";</script>';
+        echo '<script>alert("Invalid User");window.history.back();</script>';
         
     }
 }

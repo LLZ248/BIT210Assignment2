@@ -42,7 +42,7 @@
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Manager')){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+      echo '<script>alert("You don\'t have permission to access this page");</script>';header("Location: http://localhost/CTIS");
   }
   ?>
     <!--Register Centre Form-->

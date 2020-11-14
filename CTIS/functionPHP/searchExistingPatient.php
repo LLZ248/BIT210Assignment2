@@ -5,7 +5,8 @@ if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
   header("Location: http://localhost/CTIS");//back to login page
 }
 if(!($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-  echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+  echo '<script>alert("You don\'t have permission to access this page");</script>';
+  header("Location: http://localhost/CTIS");//back to login page
 }
 $targetUsername = $_GET['uname'];
 //Connect to Database and append the test

@@ -44,7 +44,7 @@
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-    echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+    header("Location: http://localhost/CTIS");
   }
   ?>
   <nav class="navbar navbar-expand-lg bg-white navbar-light">
@@ -91,11 +91,11 @@
 </nav>
    
     <div class="text-white font-weight-bold display-4 text-center">Enter the Test ID</div>
-    <form class="form-inline d-flex justify-content-center mt-2" onsubmit="generateTestTableForUpdate()">
+    <form class="form-inline d-flex justify-content-center mt-2">
       <div class="form-group mx-sm-3 mb-2">
         <input type="text" class="form-control" id="targetTestID" placeholder="TestID" required>
       </div>
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      <button type="button" onclick="existingTest()" class="btn btn-primary mb-2">Submit</button>
     </form> 
     <br>
     <table id="test-table" class="table bg-white" style="max-width: 800px; margin-right: auto; margin-left: auto;">
@@ -103,7 +103,7 @@
       <tbody class="container">
         <tr>
           <th scope="row">TestID</th>
-          <td id="testID"></td>
+          <td id="testID" name="targetTestID"></td>
         </tr>
         <tr>
           <th>Date</th>
@@ -147,11 +147,33 @@
     </table>
     <div class="container m-5"><br></div>
 
-    <!--Default userType is Manager, so all pages avaible will be shown, this will be modified when PHP is applied-->
-    <script>
-      var userType = "Manager"
-      showManagerPages(userType);
-    </script>
+<?php
+if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
+  //Hide the unavailable pages for tester and show the pages if manager in the navbar
+  echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
+}
+?>
+<script>
+function existingTest() {
+  targetID = document.getElementById("targetTestID").value;
+  if (targetID != "") {
+    var respond = "";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        respond = this.responseText;
+        if (respond != ""){
+          respondList = respond.split("|");
+          generateTestTableForUpdate(respondList[0],respondList[1],respondList[2],respondList[3],respondList[4],respondList[5],respondList[6],respondList[9]);
+        }
+      }
+    }
+    xmlhttp.open("GET","functionPHP/RetrieveTestInDatabase.php?targetID="+targetID,true);
+    xmlhttp.send();
+  }
+}
+
+</script>
 
 <!--CTIS Footer-->
 <footer class="fluid-container text-center ctis-footer fixed-bottom bg-dark text-white">

@@ -43,7 +43,7 @@
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-    echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+    header("Location: http://localhost/CTIS");
   }
 
   //Connect to the database and retrieve test information
@@ -117,7 +117,7 @@
             $patResult = "positive";break;
         }
       }
-      if ($patResult === null) $patResult = 'null';
+      if ($patResult == null) $patResult = 'null';
       $status = $row['status'];
       /*
       status
@@ -130,7 +130,11 @@
         case 1:
           $status = "completed";break;
       }
-      echo '<script>'.'testList.push({testID:"'.$testID.'",testDate:new Date('.$testDate.'),patUserName:"'.$patUsername.'",patUserPassword:"'.$patPwsd.'",patName:"'.$patName.'",patType:"'.$patType.'",patSymptom:"'.$symptoms.'",resultDate:'.$resultDate.',result:'.$patResult.',patStatus:"'.$status.'"})'.'</script>';
+      if ($resultDate === NULL){
+      echo '<script>'.'testList.push({testID:"'.$testID.'",testDate:new Date('.$testDate.'),patUserName:"'.$patUsername.'",patUserPassword:"'.$patPwsd.'",patName:"'.$patName.'",patType:"'.$patType.'",patSymptom:"'.$symptoms.'",resultDate:'.$resultDate.',result:'.$patResult.',patStatus:"'.$status.'"})'.'</script>';}
+      else{
+        echo '<script>'.'testList.push({testID:"'.$testID.'",testDate:new Date('.$testDate.'),patUserName:"'.$patUsername.'",patUserPassword:"'.$patPwsd.'",patName:"'.$patName.'",patType:"'.$patType.'",patSymptom:"'.$symptoms.'",resultDate: new Date('.$resultDate.'),result:"'.$patResult.'",patStatus:"'.$status.'"})'.'</script>';
+      }
     }
   } else {
     echo '<script>alert("There is no test recorded yet.");</script>';
@@ -377,6 +381,12 @@
   //generate the tests retrieved from the database
   generateTestTable();
 </script>
+<?php
+if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
+  //Hide the unavailable pages for tester and show the pages if manager in the navbar
+  echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
+}
+?>
 <script>
 function existingPatient(str) {
   if (str != "") {
@@ -399,12 +409,7 @@ function existingPatient(str) {
   }
 }
 </script>
-<?php
-if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-  //Hide the unavailable pages for tester and show the pages if manager in the navbar
-  echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
-}
-?>
+
 
 
 <!--CTIS Footer-->

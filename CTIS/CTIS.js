@@ -23,7 +23,7 @@ function generateTestTable(){//generate the patient table which list the test de
 
     //display test result if complete
     
-    if(testList[i]["patStatus"] == "complete"){
+    if(testList[i]["patStatus"] == "completed"){
       appendCompleteTest(testList[i]["testID"],testList[i]["resultDate"],testList[i]["result"]);
     }
   }
@@ -401,29 +401,11 @@ function generatePatientTableForPatient(targetpatUserName){
 
 
 /*functions for Update Test Page*/
-function generateTestTableForUpdate(){
-  event.preventDefault();//prevent the page to refresh
+"$testID|$testDate|$patUsername|$patPwsd|$patName|$patType|$symptoms|$resultDate|$patResult|$status"
+function generateTestTableForUpdate(testId,testdate,patusername,patupswd,patname,pattype,patsymptom,patstatus){
 
-  var targettestID = document.getElementById("targetTestID").value;
-  for(i=0;i<testList.length;i++){
-    var testID = testList[i]["testID"];
-    if (testID == targettestID){
-      var patstatus = testList[i]["patStatus"];
-      //If the test is aleady completed, no action is taken except alert the user
-      if (patstatus == "complete"){
-        alert("The test is already completed!");
-        break;
-      }
-      var patusername = testList[i]["patUserName"];
-      var testdate = testList[i]["testDate"];
-      var patupswd = testList[i]["patUserPassword"];
-      var patname = testList[i]["patName"];
-      var pattype = testList[i]["patType"];
-      var patsymptom = testList[i]["patSymptom"];
-      
-      
       //replace the empty value of the table with the selected test details
-      document.getElementById("testID").innerHTML = testID;
+      document.getElementById("testID").innerHTML = testId;
       document.getElementById("Date").innerHTML = testdate;
       document.getElementById("patUsername").innerHTML = patusername;
       document.getElementById("patName").innerHTML = patname;
@@ -435,7 +417,8 @@ function generateTestTableForUpdate(){
       //create the form to submit result
       var updateTestForm = document.createElement("form");
       updateTestForm.setAttribute("id","update-test-form");
-      updateTestForm.setAttribute("onsubmit","updateTest()");
+      updateTestForm.setAttribute("method","GET");
+      updateTestForm.setAttribute("action","functionPHP/updateTestInDatabase.php");
 
       //create the first radio button for positive result
       var check1 = document.createElement("div");
@@ -445,7 +428,7 @@ function generateTestTableForUpdate(){
       check1Input.setAttribute("name","patResultRadio");
       check1Input.setAttribute("type","radio");
       check1Input.setAttribute("id","check1");
-      check1Input.setAttribute("value","positive");
+      check1Input.setAttribute("value","1");
       check1Input.checked = true;
       var check1Label = document.createElement("label");
       check1Label.setAttribute("class","form-check-label");
@@ -462,7 +445,7 @@ function generateTestTableForUpdate(){
       check2Input.setAttribute("name","patResultRadio");
       check2Input.setAttribute("type","radio");
       check2Input.setAttribute("id","check2");
-      check2Input.setAttribute("value","negative");
+      check2Input.setAttribute("value","0");
       var check2Label = document.createElement("label");
       check2Label.setAttribute("class","form-check-label");
       check2Label.setAttribute("for","check2");
@@ -476,20 +459,20 @@ function generateTestTableForUpdate(){
       submitbtn.setAttribute("class","btn btn-success");
       submitbtn.innerHTML = "Submit";
 
-      
+      var testIDinput = document.createElement("input");
+      testIDinput.setAttribute("name","testID");
+      testIDinput.setAttribute("value",testId);
+      testIDinput.style.display = "none";
+
+
+      updateTestForm.appendChild(testIDinput);
       updateTestForm.appendChild(check1);//add check1 to the form
       updateTestForm.appendChild(check2);//add check2 to the form
       updateTestForm.appendChild(submitbtn);//add submit button to the form
       document.getElementById("result").appendChild(updateTestForm);//display the form
-      break;
     }
-    if (i==(testList.length-1)){
-      //unmatch testID
-      alert("Test with test ID \""+targettestID+"\" is not found")
-      break;
-    }
-  }
-}
+    
+  
 
 function updateTest(){
   event.preventDefault();

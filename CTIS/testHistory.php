@@ -44,7 +44,7 @@
   }
   if(!($_SESSION['userType'] == 'Patient')){
     //not patient
-    echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+    echo '<script>alert("You don\'t have permission to access this page");</script>';header("Location: http://localhost/CTIS");
   }
   ?>
     <nav class="navbar navbar-expand-lg bg-white navbar-light">

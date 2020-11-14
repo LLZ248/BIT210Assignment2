@@ -46,7 +46,8 @@
     if($_SESSION['userType'] == 'Tester'){
       echo '<script>alert("You don\'t have permission to access this page");window.location.href="testReport.php";</script>';
     }else{
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+      echo '<script>alert("You don\'t have permission to access this page");';header("Location: http://localhost/CTIS");
+
     }
   }
   ?>
@@ -118,12 +119,14 @@
             <tbody>
 
             </tbody>
+            <?php
+            if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
+              //Hide the unavailable pages for tester and show the pages if manager in the navbar
+              echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
+            }
+            ?>
             <script type="text/javascript">
-            
-                var userType = "Manager"
-                showManagerPages(userType);
                 generateTableTK();
-
             </script>
         </table>
     </div>
