@@ -29,7 +29,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID'";
+$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID' AND status = 0";
 
 if ($conn->query($sql) === TRUE) {
   echo '<script>alert("Record updated successfully")</script>';
