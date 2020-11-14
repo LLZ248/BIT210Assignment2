@@ -5,7 +5,8 @@ if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
   header("Location: http://localhost/CTIS");//back to login page
 }
 if(!($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-  echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
+  echo '<script>alert("You don\'t have permission to access this page");</script>';
+  header("Location: http://localhost/ctis");
 }
 
 
@@ -109,7 +110,7 @@ if ($result->num_rows > 0) {//The patient is an existing patient in the system
         VALUES ('$testID', '$testDate', '$targetPatType','$targetPatSymptoms',0,'$targetPatUname'," ."'". $_SESSION['centreID'] .  "');";
         if ($conn->query($sql) === TRUE) {
             echo '<script>alert("New record created successfully")</script>';
-            echo '<script>window.location.href="testReport.php";</script>';
+            header("Location: http://localhost/ctis/testReport.php");
         } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -137,7 +138,7 @@ if ($result->num_rows > 0) {//The patient is an existing patient in the system
     VALUES ('$testID', '$testDate', '$targetPatType','$targetPatSymptoms',0,'$targetPatUname'," ."'". $_SESSION['centreID'] .  "');";
     if ($conn->query($sql) === TRUE) {
         echo '<script>alert("New record created successfully")</script>';
-        echo '<script>window.location.href="testReport.php";</script>';
+        header("Location: http://localhost/ctis/testReport.php");
     } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     }

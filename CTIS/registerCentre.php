@@ -48,7 +48,7 @@
     <!--Register Centre Form-->
     <div class="container" style="margin-top: 10%;">
         <span class="register-name-header text-white">Please Enter Your Centre's Name</span>
-        <form class="register-centre-form" method = "POST" action = "registerCentreName.php">
+        <form class="register-centre-form" method = "POST" action = "functionPHP/registerCentreName.php">
             <!--Input Centre Name-->
             <div class="form-group">
                 <input type="text" class="form-control" id="centrename" placeholder="Centre's Name" name="cName" required>

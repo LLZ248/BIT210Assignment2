@@ -15,7 +15,7 @@ $expression = "/[a-zA-Z\s]{5,50}/";//at least 6 characters, maximum is 50
 
 if(!preg_match($expression,$cName)){
   echo '<script>alert("This name is invalid. Aplhabet Only. 6-50 Characters!.");</script>';
-  echo '<script>window.location.href="registerCentre.php";</script>';
+  echo'<script>history.go(-1);</script>';
   exit();
 }
 
@@ -38,11 +38,10 @@ if ($conn->connect_error) {
 }
 
 $sql = "UPDATE test_centre SET centreID = '$centreID',centreName = '$cName' WHERE ". 'centreID = \'' .$oldCentreID .'\'';
-if ($conn->query($sql) === TRUE) {
+if ($conn->query($sql) === TRUE) {//update test centre name successfully
   echo "Record updated successfully";
   $_SESSION['centreID'] = $centreID;//replace the session centreID with new centreID
-  echo '<script>alert("The test centre is updated\nName:'.$cName.'\nTestCentreID:'.$centreID.'");</script>';
-  echo '<script>window.location.href="testReport.php";</script>';
+  header("Location: http://localhost/ctis/testReport.php");
 } else {
   echo "Error updating record: " . $conn->error;
 }

@@ -86,7 +86,7 @@
             ?>
           </figcaption>
         </figure>
-        <form action="logout.php">  
+        <form action="functionPHP/logout.php">  
           <button type="submit" class="btn btn-danger">Log Out</button>
         </form>
         
