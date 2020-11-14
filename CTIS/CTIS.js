@@ -12,14 +12,14 @@ function showManagerPages(userType){
 function generateTestTable(){//generate the patient table which list the test details
   for(i=0;i<testList.length;i+=1){
     // initialsing the variables
-    
+    var testID = testList[i]["testID"];
     var testdate = testList[i]["testDate"];
     var patusername = testList[i]["patUserName"];
     var patupswd = testList[i]["patUserPassword"];
     var patname = testList[i]["patName"];
     var pattype = testList[i]["patType"];
     var patsymptom = testList[i]["patSymptom"];
-    appendTest(patusername,patupswd,patname,pattype,patsymptom,testdate);
+    appendTest(testID,patusername,patupswd,patname,pattype,patsymptom,testdate);
 
     //display test result if complete
     
@@ -54,12 +54,12 @@ function appendCompleteTest(testID,resultDate,result){
 }
 
 //append test with pending status
-function appendTest(patUsername,patPassword,patName,patType,symptom,testDate){
+function appendTest(testID,patUsername,patPassword,patName,patType,symptom,testDate){
   var username = patUsername;
   var password = patPassword;
   var name = patName;
   var type = patType;
-  var testId = generateTestID(username,testDate).toUpperCase();
+  var testId = testID;
   
 
   let tbody = document.getElementsByTagName("tbody")[0];
