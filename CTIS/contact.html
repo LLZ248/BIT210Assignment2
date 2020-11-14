@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS & JS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <!-- CTIS CSS & JS-->
+    <link rel="stylesheet" href="CTIS.css">
+    <script src="CTIS.js"></script>
+    <title>CTIS Test History</title>
+
+    <!--Icon-->
+    <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="icon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light">
+        <!-- Brand -->
+            <a class="navbar-brand" href="index.html"><img src="picture/CTISlogo.png" width="70" height="70" alt=""></a>
+  </nav>
+<script>
+    function submitform(){
+        alert("the message is sent.");
+    }
+</script>
+  <div class="container mt-4">
+      <div class="row">
+        <div class="col">
+            <form onsubmit="submitform()">
+            <span class="pl-4 display-4 text-white">Message Us</span><br><br>
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email"  placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                  <label for="Username">Username</label>
+                  <input type="text" class="form-control" id="Username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" rows="3" required></textarea>
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="col">
+            <span class="pl-4 display-4 text-white">Contact Us</span><br><br>
+            <ul style="list-style: none;">
+                <li><img src="https://img.icons8.com/clouds/50/000000/worldwide-location.png" alt=""/>No 54 Jalan HELP, 40150 Subang<br><span style="padding-left: 3em;">Bestari, Selangor, Malaysia</span></li>
+                <li><img src="https://img.icons8.com/clouds/50/000000/phone-not-being-used.png" alt=""/><a href="tel:036228547" style="color:black; text-decoration: none;">03-6228547</a></li>
+                <li><img src="https://img.icons8.com/clouds/50/000000/apple-mail.png" alt=""/><a href="mailto:CTIScontact@gmail.com" style="color:black; text-decoration: none;">CTIScontact@gmail.com</a></li>
+            </ul>
+        </div>
+      </div>
+  </div>
+  <div class="container m-5"><br></div>
+    
+  
+
+<!--CTIS Footer-->
+<footer class="fluid-container text-center ctis-footer fixed-bottom bg-dark text-white">
+    &copy;Covid Testing Information Center 2020
+    <p class="mx-auto"><a href="contact.html" class="text-white float-left">Contact Us</a><a class="text-white float-right" href="#">Back to top</a></p>
+</footer>
+
+</body>
+</html>

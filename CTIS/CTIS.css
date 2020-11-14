@@ -1,0 +1,212 @@
+body{
+    background-color: rgb(107, 208, 252);
+    font-family:'Raleway';
+}
+.managerShow{
+    display: none;
+}
+.sortable-attribute{
+    cursor: pointer;
+}
+.sortable-attribute:hover{
+    background-color: lightblue;
+}
+.modal-attr{
+    padding-left: 1em;
+    padding-bottom: 1.5em;
+    font-weight: bolder;
+    font-size: 120%;
+}
+html, body { 
+    overflow-x: hidden; 
+    scroll-behavior: smooth;
+}
+
+
+/* For Login Page */
+.login{
+    margin-top: 20%;
+    box-sizing: border-box;
+    display: block;
+}
+.login .row .col-lg{
+    padding: 1em;
+}
+.login-bg{
+    background: none;
+    padding: 0em;
+}
+.login-header{
+    background: none;
+    text-align: center;
+    font-weight: bold;
+}
+.login-logo{
+    display: block;
+    width: 150px;
+    height: 150px;
+}
+/* For Login Page */
+
+
+/* For Register Centre Page */
+.register-name-header{
+    display: block;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.register-centre-form .btn{
+    margin-left: 33%;
+    margin-top: 10%;
+}
+.register-centre-form{
+    margin-top: 20%;
+}
+/* For Register Centre Page */
+
+
+/* For Test Record Page */
+#test-modal .row{
+    padding-bottom: 0.5em;
+    padding-top: 1em;
+    border-bottom: 1px solid black;
+}
+#test-modal .row:nth-child(odd){
+    background-color: white;
+}
+#test-modal .row:nth-child(even){
+    background-color: rgb(222, 226, 230);
+}
+
+#patient-table tr td:nth-child(1),#patient-table th:nth-child(1),
+#patient-table tr td:nth-child(5),#patient-table th:nth-child(5),
+#patient-table tr td:nth-child(6),#patient-table th:nth-child(6),
+#patient-table tr td:nth-child(7),#patient-table th:nth-child(7),
+#patient-table tr td:nth-child(8),#patient-table th:nth-child(8),
+#patient-table tr td:nth-child(9),#patient-table th:nth-child(9),
+#patient-table tr td:nth-child(10),#patient-table th:nth-child(10){
+    display: none;
+}
+/* For Test Record Page */
+
+
+/* For Test Kit Page */
+.tk-name-header {
+    display: block;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#tk-table {
+    max-width: 1400px;
+    font-size: 80%;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 10%;
+}
+
+#tk-table td {
+    padding: 1em 0.5em;
+}
+
+#tk-table-header th {
+    padding: 1em 0.5em;
+    background-color: rgb(126, 126, 126);
+    color: white;
+    font-size: 120%;
+}
+
+
+#tk-table tr td:nth-child(4), #tk-table-header th:nth-child(4),
+#tk-table tr td:nth-child(5), #tk-table-header th:nth-child(5){
+    width: 5%;
+}
+/* For Test Kit Page */
+
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+   .ctis-footer p{
+    max-width: 1400px;
+   }
+
+    /* For Login Page */
+    .login-form{
+        margin-top: 13%;
+    }
+    .login-logo{
+        display: block;
+        height: 200px;
+        width: 200px;
+    }
+    .logo-text{
+        display: none;
+    }
+    .login{
+        margin-top: 12%;
+    }
+    
+    .login .row .col-lg{
+        padding: 0em 2em;
+    }
+    .login-header{
+        font-size: 500%;
+        font-weight: bolder;
+        text-align: right;
+    }
+    /* For Login Page */
+
+    
+    /* For Register Centre Page */
+    .register-centre-form{
+        width: 25%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .register-centre-form .btn{
+        margin-left: 33%;
+        margin-top: 20%;
+    }
+    .register-name-header{
+        font-size: 300%;
+    }
+    .register-centre-form{
+        margin-top: 10%;
+    }
+    /* For Register Centre Page */
+
+
+    /* For Test Record Page */
+    #patient-table tr td:nth-child(1),#patient-table th:nth-child(1),
+    #patient-table tr td:nth-child(5),#patient-table th:nth-child(5),
+    #patient-table tr td:nth-child(6),#patient-table th:nth-child(6),
+    #patient-table tr td:nth-child(7),#patient-table th:nth-child(7),
+    #patient-table tr td:nth-child(8),#patient-table th:nth-child(8),
+    #patient-table tr td:nth-child(9),#patient-table th:nth-child(9),
+    #patient-table tr td:nth-child(10),#patient-table th:nth-child(10){
+        display: table-cell;
+    }
+    /* For Test Record Page */
+
+
+    /* For Test Record Page */
+    #tk-table tr td:nth-child(3), #tk-table-header th:nth-child(3),
+    #tk-table tr td:nth-child(4), #tk-table-header th:nth-child(4),
+    #tk-table tr td:nth-child(7), #tk-table-header th:nth-child(7),
+    #tk-table tr td:nth-child(2), #tk-table-header th:nth-child(2) {
+        display: table-cell;
+     }
+
+   
+  }
+
+@media only screen and (min-width : 1200px) {
+    .login-bg{
+        border-right: 1px solid white;
+    }
+}
