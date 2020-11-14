@@ -10,7 +10,7 @@ if(!($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
 
 
 $targetPatName = $_GET['inputpatname'];
-$targetPatUname = $_GET['inputpatuname'];
+$targetPatUname = strtoupper($_GET['inputpatuname']);
 $targetPatPwsd = $_GET['inputpatpwsd'];
 $targetPatType = $_GET['selectpattype'];
 $targetPatSymptoms = $_GET['inputsymptoms'];
@@ -136,7 +136,8 @@ if ($result->num_rows > 0) {//The patient is an existing patient in the system
     $sql = "INSERT INTO test (testID, testDate, patType,symptoms,status,patUsername,centreID)
     VALUES ('$testID', '$testDate', '$targetPatType','$targetPatSymptoms',0,'$targetPatUname'," ."'". $_SESSION['centreID'] .  "');";
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo '<script>alert("New record created successfully")</script>';
+        echo '<script>window.location.href="testReport.php";</script>';
     } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     }

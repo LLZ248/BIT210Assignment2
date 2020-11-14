@@ -298,7 +298,7 @@
           <!-- Modal body -->
           <div class="modal-body">
               <div class="text-danger pb-4">*If the patient is existing patient, Type in the patient's username and proceed will auto-fill his/her name and password<br>*Every field must be filled</div>
-              <div class="form-row">
+              <div class="form-row"><small>(Patient's name first letter + last 3 letters + patient's birthday(DDMM))<br>Example: Ali Baba(B-day:25/05/1998) = AABA2505</small>
                 <div class="form-group col-md-6">
                   <label for="inputpatuname">Patient Username</label>
                   <input type="text" class="form-control" id="inputpatuname" name="inputpatuname" placeholder="patient username" onfocusout="existingPatient(this.value)" pattern="[A-Z0-9]{8}" title="8 letters(Uppercase alphabets and number only)" required>

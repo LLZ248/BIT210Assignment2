@@ -111,10 +111,10 @@ INSERT INTO TESTKIT (kitID,testName) VALUES ('T0005','CoV-3');
 INSERT INTO TEST_CENTRE_TESTKIT (centreID,kitID,availableStock) VALUES('C0001','T0001',5);
 INSERT INTO TEST_CENTRE_TESTKIT (centreID,kitID,availableStock) VALUES('C0001','T0002',14);
 
-INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Kaira Clark','KARK4512','abc123');
-INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Jevon Southern','JERN5874','abc123');
-INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Jaydan Ho','JNHO6325','abc123');
-INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Maximilian Hale','MALE5214','abc123');
-INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Raihan Gilliam','RIAM9874','abc123');
+INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Kaira Clark','KARK0512','abc123');
+INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Jevon Southern','JERN0414','abc123');
+INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Jaydan Ho','JNHO0625','abc123');
+INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Maximilian Hale','MALE0214','abc123');
+INSERT INTO PATIENT (patName,patUsername,patPwsd) VALUES ('Raihan Gilliam','RIAM0804','abc123');
 
-INSERT INTO TEST (testID,testDate,patType,symptoms,status,patUsername,centreID) VALUES ('TCG54200304','2020-01-11 12:25:01',1,'too happy',0,'KARK4512','C0001');
+INSERT INTO TEST (testID,testDate,patType,symptoms,status,patUsername,centreID) VALUES ('TCG12200304','2020-01-11 12:25:01',1,'too happy',0,'KARK0512','C0001');
