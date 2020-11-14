@@ -38,16 +38,14 @@
 <body>
 <?php
   session_start();
+ include('config.php');
+  {
   if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
     // no username and usertype
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Manager')){
-    if($_SESSION['userType'] == 'Tester'){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="testReport.php";</script>';
-    }else{
-      echo '<script>alert("You don\'t have permission to access this page");</script>';header("Location: http://localhost/CTIS");
-    }
+      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
   }
   ?>
   <nav class="navbar navbar-expand-lg bg-white navbar-light">
@@ -78,15 +76,14 @@
           </li>
         </ul>
         <figure class="mr-3 mt-2">
-          <img src="picture/user.png" alt="user" width = 50 class="ml-lg-5"/>
+          <img src="picture/user.png" alt="user" width = 50 />
           <figcaption>
              <?php
               echo $_SESSION['userID'];
-              echo '('.$_SESSION['centreID'].')';
             ?>
           </figcaption>
         </figure>
-        <form action="functionPHP/logout.php">  
+        <form action="logout.php">  
           <button type="submit" class="btn btn-danger">Log Out</button>
         </form>
         
@@ -94,72 +91,10 @@
 </nav>
   <h1 class="text-center text-white bg-primary display-4">Tester Table</h1>
   <div class="d-flex justify-content-center">
-      <button class="btn btn-success px-4 my-2" data-toggle="modal" data-target="#addTestOfficerModal">Add Tester</button>
-      <button class="btn btn-danger px-4 my-2 ml-5" data-toggle="modal" data-target="#removeTestOfficerModal">Remove Tester</button>
+      <a class="btn btn-success" href="addTester.php">Add Tester</a>
   </div><br>
   
-  <div class="modal" id="addTestOfficerModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <form onsubmit="addTestOfficer()" id="tester-form">
-        <div class="modal-header">
-          <h4 class="modal-title">Tester Information</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputtesteruname">Username</label>
-                <input type="text" class="form-control" id="inputtesteruname" placeholder="Tester Username" required>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputtesterpwsd">Password</label>
-                <input type="text" class="form-control" id="inputtesterpwsd" placeholder="Password" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputtetsername">Tester Name</label>
-              <input type="text" class="form-control" id="inputtetsername" placeholder="Tester Name" required>
-            </div>
-            <button type="submit" class="btn btn-success">Create</button>
-            <button type="reset" class="btn btn-danger">Reset</button>
-        </div>
-        </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="removeTestOfficerModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <form onsubmit="removeTestOfficer()" id="remove-tester-form">
-        <div class="modal-header">
-          <h4 class="modal-title">Remove Tester</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-              <div class="form-group row">
-                <label class="col-4" for="inputremovetesteruname">Tester Username</label>
-                <input type="text" class="form-control col-8" id="inputremovetesteruname" placeholder="Tester Username" required>
-              </div>
-              
-            <button type="submit" class="btn btn-danger">Remove</button>
-        </div>
-        </form>
-      </div>
-    </div>
-</div>
-      
-   
-    
+                             
 <table id="test-officer-table" class="table bg-white" style="max-width: 800px; margin-right: auto; margin-left: auto;">
     <thead class="thead-dark">
         <tr>
@@ -167,21 +102,26 @@
         <th>Password</th>
         <th onclick="sortTable(2)" style="cursor: pointer;">Tester Name</th>
         </tr>
-        
     </thead>
     <tbody>
-    </tbody>
+    <?php $sql = "SELECT * from CENTRE_OFFICER where position=0";
+         $query = $dbh -> prepare($sql);
+         $query->execute();
+         $results=$query->fetchAll(PDO::FETCH_OBJ);
+         if($query->rowCount() > 0)
+         {
+         foreach($results as $result)
+         {               
+         ?>
+            <tr>
+                <td><?php echo htmlentities($result->officerID);?></td>
+                <td><?php echo htmlentities($result->officerPwsd);?></td>  
+                <td><?php echo htmlentities($result->officerName);?></td>    
+            </tr>
+    </tbody><?php }} ?>
 </table>
 
-<?php
-if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-  //Hide the unavailable pages for tester and show the pages if manager in the navbar
-  echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
-}
-?>
-<script>
-    generateTestOfficerTable();
-</script>
+
     <div class="container m-5"><br></div>
 
 
@@ -194,3 +134,5 @@ if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
 
 </body>
 </html>
+<?php } 
+?> 

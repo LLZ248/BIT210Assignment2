@@ -38,13 +38,14 @@
 <body>
 <?php
   session_start();
+  include('config.php');
   if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
     // no username and usertype
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Patient')){
     //not patient
-    echo '<script>alert("You don\'t have permission to access this page");</script>';header("Location: http://localhost/CTIS");
+    echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
   }
   ?>
     <nav class="navbar navbar-expand-lg bg-white navbar-light">
@@ -73,113 +74,14 @@
             ?>
           </figcaption>
         </figure>
-          <form action="functionPHP/logout.php">  
+          <form action="logout.php">  
           <button type="submit" class="btn btn-danger">Log Out</button>
         </form>
         </div>
   </nav>
   <!--Header-->
   <h1 class="text-center text-white bg-primary display-4 m-0">Test History</h1>
-  <!--Test Modal to be shown when activate-->
-  <div class="modal" id="test-modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" >
-        <div class="modal-header">
-          <h5 class="modal-title">Test Record</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="cotainer">
-            <div class="row">
-              <div class="col-5">
-                Test ID
-              </div>
-              <div class="col-7" id="test-modal-testId">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Test Date
-              </div>
-              <div class="col-7" id="test-modal-testDate">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Patient Username
-              </div>
-              <div class="col-7" id="test-modal-patUsername">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Patient Name
-              </div>
-              <div class="col-7" id="test-modal-patName">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Patient Password
-              </div>
-              <div class="col-7" id="test-modal-patPassword">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Patient Type
-              </div>
-              <div class="col-7" id="test-modal-patType">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Symptoms
-              </div>
-              <div class="col-7" id="test-modal-symptoms">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Result Date
-              </div>
-              <div class="col-7" id="test-modal-resultDate">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Result
-              </div>
-              <div class="col-7" id="test-modal-result">
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                Status
-              </div>
-              <div class="col-7" id="test-modal-status">
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <!--Test table that display the details of the test that the patient has been taken-->
   <table id="patient-table" class="table table-striped table-bordered bg-white">
     <thead class="thead-dark">
@@ -189,10 +91,6 @@
         <th class="th-sm">Date
         </th>
         <th class="th-sm">Patient Username
-        </th>
-        <th class="th-sm">Patient Name
-        </th>
-        <th class="th-sm">Patient Password
         </th>
         <th class="th-sm">Patient Type
         </th>
@@ -204,19 +102,36 @@
         </th>
         <th class="th-sm">Status
         </th>
-        <th class="th-sm">View
-        </th>
       </tr>
     </thead>
+   
     <tbody>
-
-    </tbody>
+    <?php 
+      $id = $_SESSION['userID'];
+      $sql = "SELECT * from test where patUsername=:id";
+      $query = $dbh -> prepare($sql);
+      $query->bindParam(':id',$id,PDO::PARAM_STR);
+      $query->execute();
+      $results=$query->fetchAll(PDO::FETCH_OBJ);
+      if($query->rowCount() > 0)
+       {
+        foreach($results as $result)
+        {
+        ?> 
+            <tr>
+                <td><?php echo htmlentities($result->testID);?></td>
+                <td><?php echo htmlentities($result->testDate);?></td>  
+                <td><?php echo htmlentities($result->patUsername);?></td>
+                <td><?php echo htmlentities($result->patType);?></td>  
+                <td><?php echo htmlentities($result->symptoms);?></td>
+                <td><?php echo htmlentities($result->resultDate);?></td>
+                <td><?php echo htmlentities($result->result);?></td>   
+                <td><?php echo htmlentities($result->status);?></td>  
+            </tr>
+    </tbody><?php }} ?>
   </table>
   <div class="container m-5"><br></div>
-  <!--CGEP1254 username is used, this will be changed when PHP is applied-->
-  <script>
-    generatePatientTableForPatient("CGEP1254")
-  </script>
+
 
 <!--CTIS Footer-->
 <footer class="fluid-container text-center ctis-footer fixed-bottom bg-dark text-white">

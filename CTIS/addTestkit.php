@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -26,7 +26,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="icon/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="icon/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="icon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="icon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
@@ -40,14 +40,36 @@
   session_start();
   include('config.php');
   {
-  if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
-    // no username and usertype
-    header("Location: http://localhost/CTIS");//back to login page
-  }
-  if(!($_SESSION['userType'] == 'Manager')){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
-  }
-  ?>
+  $msg = "";
+ if(isset($_POST['add']))
+ {
+    $id=$_SESSION['centreID'];
+    $kitId=$_POST['id'];
+    $name=$_POST['name'];
+    $stock=$_POST['stock'];
+    $sql="SELECT * FROM testkit WHERE kitID=:id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->execute();
+    if ($query->rowCount() > 0) {
+    $msg="Testkit Already Exists";
+    }
+    else{
+    $sql="INSERT INTO testkit(testName, kitID) VALUES (:name,:id);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':name',$name,PDO::PARAM_STR);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->execute();
+    $sql="INSERT INTO test_centre_testkit (centreID , kitID, availableStock ) VALUES (:cid,:id, :stock);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':cid',$id,PDO::PARAM_STR);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->bindParam(':stock',$stock,PDO::PARAM_STR);
+    $query->execute();
+    $msg="Added Successfully";
+    }
+ }
+ ?>
   <nav class="navbar navbar-expand-lg bg-white navbar-light">
     <!-- Brand -->
     <a class="navbar-brand" href="#"><img src="picture/CTISlogo.png" width="70" height="70" alt=""></a>
@@ -87,53 +109,79 @@
           <button type="submit" class="btn btn-danger">Log Out</button>
         </form>
         
-        
     </div>
 </nav>
-   <div class="display-4 text-center text-white bg-primary">Test Kits</div>
-    <div class="fluid-container">
-        <br>
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-success" href="addTestkit.php">Add Testkit</a>
+  <h1 class="text-center text-white bg-primary display-4">Tester Registration</h1>
+  <div class="d-flex justify-content-center">
+     </div><br>
+  
+  <div class="container-fluid">
+     <div class="row">
+       <div class="col-3">
+          </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Tester's Detail</h4>
+                    <form method="post">
+                    <div class="succWrap"><?php echo htmlentities($msg); ?> </div>
+                       <div class="form-body">
+                                         
+                       <label class="col-md-2">kitID </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="id" class="form-control" required maxlength="5">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                       
+                       <label class="col-md-2">Testkit Name </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="name" class="form-control" required>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                        <label class="col-md-2">Stock </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="number"  name="stock" class="form-control" required >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                
+
+                                </div>
+                            </div>
+                           </div>
+                         <div class="form-actions">
+                         <div class="text-right">
+                         <button type="submit" name="add" class="btn btn-success">Create</button>
+                         <button type="reset" class="btn btn-danger">Reset</button>
+                         </div>
+
         </div>
-        <hr />
-        <table id="tk-table" class="table table-striped table-bordered bg-light">
-            <thead>
-                <tr id="tk-table-header">
-                    <th class="sortable-attribute" onclick="sortTableTK(0)">ID</th>
-                    <th class="sortable-attribute" onclick="sortTableTK(1)">Name</th>
-                    <th class="sortable-attribute" onclick="sortTableTK(2)">Stock</th>
-                    <th class="unsortable-attribute">Update</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-            <?php 
-            $id = $_SESSION['centreID'];
-            $sql = "SELECT * from test_centre_testkit tct, testkit tk where tct.kitID = tk.kitID and centreID=:id";
-            $query = $dbh -> prepare($sql);
-            $query->bindParam(':id',$id,PDO::PARAM_STR);
-            $query->execute();
-            $results=$query->fetchAll(PDO::FETCH_OBJ);
-            if($query->rowCount() > 0)
-            {
-            foreach($results as $result)
-            {               
-            ?>
-            <tr>
-                <td><?php echo htmlentities($result->kitID);?></td>
-                <td><?php echo htmlentities($result->testName);?></td>  
-                <td><?php echo htmlentities($result->availableStock);?></td>  
-                <td><a class="btn btn-success" href="updateTestkit.php?id=<?php echo htmlentities($result->kitID);?>">Update</a></td>
-       
-            </tr>
-    </tbody><?php }} ?>
-          
-        </table>
+        </form>
+        </div>
     </div>
-    <div class="container m-5">
-        <br>
-    </div>
+</div>
+
+
+
+
+    <div class="container m-5"><br></div>
+
 
 
 <!--CTIS Footer-->
