@@ -38,17 +38,14 @@
 <body>
 <?php
   session_start();
+  include('config.php');
+  {
   if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
     // no username and usertype
     header("Location: http://localhost/CTIS");//back to login page
   }
   if(!($_SESSION['userType'] == 'Manager')){
-    if($_SESSION['userType'] == 'Tester'){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="testReport.php";</script>';
-    }else{
-      echo '<script>alert("You don\'t have permission to access this page");';header("Location: http://localhost/CTIS");
-
-    }
+      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
   }
   ?>
   <nav class="navbar navbar-expand-lg bg-white navbar-light">
@@ -87,22 +84,18 @@
             ?>
           </figcaption>
         </figure>
+        
         <form action="functionPHP/logout.php">  
           <button type="submit" class="btn btn-danger">Log Out</button>
         </form>
         
-        
     </div>
-</nav>
+    </nav>
    <div class="display-4 text-center text-white bg-primary">Test Kits</div>
     <div class="fluid-container">
-        
-        <div class="container">
-            <span class="tk-name-header text-white">Enter Test Kit Name</span>
-            <form id="tk-form" onsubmit="addTestkit()">
-                <input type="text" class="form-control" id="tkName" placeholder="Test Kit Name">
-                <button class="btn btn-success" type="submit">Add</button>
-            </form>
+        <br>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-success" href="addTestkit.php">Add Testkit</a>
         </div>
         <hr />
         <table id="tk-table" class="table table-striped table-bordered bg-light">
@@ -112,28 +105,42 @@
                     <th class="sortable-attribute" onclick="sortTableTK(1)">Name</th>
                     <th class="sortable-attribute" onclick="sortTableTK(2)">Stock</th>
                     <th class="unsortable-attribute">Update</th>
-                    <th class="unsortable-attribute">Delete</th>
                     
                 </tr>
             </thead>
             <tbody>
-
-            </tbody>
-            <?php
-            if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
-              //Hide the unavailable pages for tester and show the pages if manager in the navbar
-              echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
-            }
+            <?php 
+            $id = $_SESSION['centreID'];
+            $sql = "SELECT * from test_centre_testkit tct, testkit tk where tct.kitID = tk.kitID and centreID=:id";
+            $query = $dbh -> prepare($sql);
+            $query->bindParam(':id',$id,PDO::PARAM_STR);
+            $query->execute();
+            $results=$query->fetchAll(PDO::FETCH_OBJ);
+            if($query->rowCount() > 0)
+            {
+            foreach($results as $result)
+            {               
             ?>
-            <script type="text/javascript">
-                generateTableTK();
-            </script>
+            <tr>
+                <td><?php echo htmlentities($result->kitID);?></td>
+                <td><?php echo htmlentities($result->testName);?></td>  
+                <td><?php echo htmlentities($result->availableStock);?></td>  
+                <td><a class="btn btn-success" href="updateTestkit.php?id=<?php echo htmlentities($result->kitID);?>">Update</a></td>
+       
+            </tr>
+    </tbody><?php }} ?>
+          
         </table>
     </div>
     <div class="container m-5">
         <br>
     </div>
-
+<?php
+if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
+  //Hide the unavailable pages for tester and show the pages if manager in the navbar
+  echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
+}
+?>
 
 <!--CTIS Footer-->
 <footer class="fluid-container text-center ctis-footer fixed-bottom bg-dark text-white">
@@ -143,3 +150,4 @@
 
 </body>
 </html>
+<?php } ?> 

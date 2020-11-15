@@ -38,17 +38,39 @@
 <body>
 <?php
   session_start();
- include('config.php');
+  include('config.php');
   {
-  if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
-    // no username and usertype
-    header("Location: http://localhost/CTIS");//back to login page
-  }
-  if(!($_SESSION['userType'] == 'Manager')){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
-  }
-  ?>
-<nav class="navbar navbar-expand-lg bg-white navbar-light">
+  $msg = "";
+ if(isset($_POST['add']))
+ {
+    $id=$_SESSION['centreID'];
+    $kitId=$_POST['id'];
+    $name=$_POST['name'];
+    $stock=$_POST['stock'];
+    $sql="SELECT * FROM testkit WHERE kitID=:id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->execute();
+    if ($query->rowCount() > 0) {
+    $msg="Testkit Already Exists";
+    }
+    else{
+    $sql="INSERT INTO testkit(testName, kitID) VALUES (:name,:id);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':name',$name,PDO::PARAM_STR);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->execute();
+    $sql="INSERT INTO test_centre_testkit (centreID , kitID, availableStock ) VALUES (:cid,:id, :stock);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':cid',$id,PDO::PARAM_STR);
+    $query->bindParam(':id',$kitId,PDO::PARAM_STR);
+    $query->bindParam(':stock',$stock,PDO::PARAM_STR);
+    $query->execute();
+    $msg="Added Successfully";
+    }
+ }
+ ?>
+  <nav class="navbar navbar-expand-lg bg-white navbar-light">
     <!-- Brand -->
     <a class="navbar-brand" href="#"><img src="picture/CTISlogo.png" width="70" height="70" alt=""></a>
 
@@ -91,49 +113,83 @@
         
     </div>
 </nav>
-  <h1 class="text-center text-white bg-primary display-4">Tester Table</h1>
+  <h1 class="text-center text-white bg-primary display-4">Tester Registration</h1>
   <div class="d-flex justify-content-center">
-      <a class="btn btn-success" href="addTester.php">Add Tester</a>
-  </div><br>
+     </div><br>
   
-                             
-<table id="test-officer-table" class="table bg-white" style="max-width: 800px; margin-right: auto; margin-left: auto;">
-    <thead class="thead-dark">
-        <tr>
-        <th onclick="sortTable(0)" style="cursor: pointer;">Username</th>
-        <th>Password</th>
-        <th onclick="sortTable(2)" style="cursor: pointer;">Tester Name</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php $sql = "SELECT * from CENTRE_OFFICER where position=0";
-         $query = $dbh -> prepare($sql);
-         $query->execute();
-         $results=$query->fetchAll(PDO::FETCH_OBJ);
-         if($query->rowCount() > 0)
-         {
-         foreach($results as $result)
-         {               
-         ?>
-            <tr>
-                <td><?php echo htmlentities($result->officerID);?></td>
-                <td><?php echo htmlentities($result->officerPwsd);?></td>  
-                <td><?php echo htmlentities($result->officerName);?></td>    
-            </tr>
-    </tbody><?php }} ?>
-</table>
+  <div class="container-fluid">
+     <div class="row">
+       <div class="col-3">
+          </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Tester's Detail</h4>
+                    <form method="post">
+                    <div class="succWrap"><?php echo htmlentities($msg); ?> </div>
+                       <div class="form-body">
+                                         
+                       <label class="col-md-2">kitID </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="id" class="form-control" required maxlength="5">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                       
+                       <label class="col-md-2">Testkit Name </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="name" class="form-control" required>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                        <label class="col-md-2">Stock </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="number"  name="stock" class="form-control" required >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                
+
+                                </div>
+                            </div>
+                           </div>
+                         <div class="form-actions">
+                         <div class="text-right">
+                         <button type="submit" name="add" class="btn btn-success">Create</button>
+                         <button type="reset" class="btn btn-danger">Reset</button>
+                         </div>
+
+        </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
 
 
     <div class="container m-5"><br></div>
 
-    
 <?php
 if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
   //Hide the unavailable pages for tester and show the pages if manager in the navbar
   echo '<script>var userType = "'.$_SESSION['userType'].'";showManagerPages(userType);</script>';
 }
 ?>
-
 
 <!--CTIS Footer-->
 <footer class="fluid-container text-center ctis-footer fixed-bottom bg-dark text-white">
@@ -143,5 +199,4 @@ if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
 
 </body>
 </html>
-<?php } 
-?> 
+<?php } ?> 

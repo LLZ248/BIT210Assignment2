@@ -38,16 +38,34 @@
 <body>
 <?php
   session_start();
- include('config.php');
-  {
-  if(!isset($_SESSION['userType']) || !isset($_SESSION['userID'])) {
-    // no username and usertype
-    header("Location: http://localhost/CTIS");//back to login page
-  }
-  if(!($_SESSION['userType'] == 'Manager')){
-      echo '<script>alert("You don\'t have permission to access this page");window.location.href="index.html";</script>';
-  }
-  ?>
+  include('config.php');
+  $msg = "";
+ if(isset($_POST['register']))
+ {
+    $id=$_SESSION['centreID'];
+    $name=$_POST['name'];
+    $uname=$_POST['uname'];
+    $pwd=$_POST['pwd'];
+    $sql="SELECT officerName FROM CENTRE_OFFICER WHERE officerID=:uname";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':uname',$uname,PDO::PARAM_STR);
+    $query->execute();
+    if ($query->rowCount() > 0) {
+    $msg="Username Already Exists";
+    }
+    else{
+    $sql="INSERT INTO CENTRE_OFFICER (officerID,officerPwsd, officerName, position, centreID) VALUES 
+    (:uname,:pwd,:name,0,:id);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':name',$name,PDO::PARAM_STR);
+    $query->bindParam(':uname',$uname,PDO::PARAM_STR);
+    $query->bindParam(':pwd',$pwd,PDO::PARAM_STR);
+    $query->bindParam(':id',$id,PDO::PARAM_STR);
+    $query->execute();
+    $msg="Registered Successfully";
+    }
+ }
+ ?>
 <nav class="navbar navbar-expand-lg bg-white navbar-light">
     <!-- Brand -->
     <a class="navbar-brand" href="#"><img src="picture/CTISlogo.png" width="70" height="70" alt=""></a>
@@ -91,41 +109,75 @@
         
     </div>
 </nav>
-  <h1 class="text-center text-white bg-primary display-4">Tester Table</h1>
+  <h1 class="text-center text-white bg-primary display-4">Tester Registration</h1>
   <div class="d-flex justify-content-center">
-      <a class="btn btn-success" href="addTester.php">Add Tester</a>
-  </div><br>
+     </div><br>
   
-                             
-<table id="test-officer-table" class="table bg-white" style="max-width: 800px; margin-right: auto; margin-left: auto;">
-    <thead class="thead-dark">
-        <tr>
-        <th onclick="sortTable(0)" style="cursor: pointer;">Username</th>
-        <th>Password</th>
-        <th onclick="sortTable(2)" style="cursor: pointer;">Tester Name</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php $sql = "SELECT * from CENTRE_OFFICER where position=0";
-         $query = $dbh -> prepare($sql);
-         $query->execute();
-         $results=$query->fetchAll(PDO::FETCH_OBJ);
-         if($query->rowCount() > 0)
-         {
-         foreach($results as $result)
-         {               
-         ?>
-            <tr>
-                <td><?php echo htmlentities($result->officerID);?></td>
-                <td><?php echo htmlentities($result->officerPwsd);?></td>  
-                <td><?php echo htmlentities($result->officerName);?></td>    
-            </tr>
-    </tbody><?php }} ?>
-</table>
+  <div class="container-fluid">
+     <div class="row">
+       <div class="col-3">
+          </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Tester's Detail</h4>
+                    <form method="post">
+                    <div class="succWrap"><?php echo htmlentities($msg); ?> </div>
+                       <div class="form-body">
+                                         
+                       <label class="col-md-2">Username </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="uname" class="form-control" required maxlength="5">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                       
+                       <label class="col-md-2">Tester Name </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="text"  name="name" class="form-control" required>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                        <label class="col-md-2">Password </label>
+                                <div class="col-md-10">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <div class="form-group">
+                                        <input type="password"  name="pwd" class="form-control" required min="6">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                
+
+                                </div>
+                            </div>
+                           </div>
+                         <div class="form-actions">
+                         <div class="text-right">
+                         <button type="submit" name="register" class="btn btn-success">Create</button>
+                         <button type="reset" class="btn btn-danger">Reset</button>
+                         </div>
+
+        </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 
 
     <div class="container m-5"><br></div>
-
     
 <?php
 if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
@@ -143,5 +195,3 @@ if(($_SESSION['userType'] == 'Manager' || $_SESSION['userType'] == 'Tester')){
 
 </body>
 </html>
-<?php } 
-?> 
