@@ -92,8 +92,8 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownUser">
             
-            <a class="dropdown-item" href="functionPHP/changePassword.php">Change Password</a>
-            <form class="dropdown-item"  action="functionPHP/logout.php">  
+            <a class="dropdown-item" href="changePassword.php">Change Password</a>
+            <form class="dropdown-item"  action="logout.php">  
             <button type="submit" class="btn btn-danger">Log Out</button>
             </form>
           </div>
