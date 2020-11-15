@@ -75,7 +75,7 @@
               <a class="nav-link" href="../testOfficer.php">Manage Tester</a>
             </li>
             <li class="nav-item patient">
-              <a class="nav-link" href="../testOfficer.php">Manage Tester</a>
+              <a class="nav-link" href="../testHistory.php">Test History</a>
             </li>
         </ul>
         <div class="dropdown">
