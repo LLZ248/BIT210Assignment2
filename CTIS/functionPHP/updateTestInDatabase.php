@@ -29,8 +29,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 // the test must be pending and same centre ID as user's
-$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID' AND status = 0 AND centreID = ".$_SESSION['centreID'].'"';
-
+$sql = "UPDATE test SET status = 1 , result = $result, resultDate ='$resultDate' WHERE testID='$targetID' AND status = 0 AND centreID = '".$_SESSION['centreID']."';";
+echo $sql;
 if ($conn->query($sql) === TRUE) {
   echo '<script>alert("Record updated successfully")</script>';
   echo '<script>location.replace("http://localhost/ctis/updateTest.php");</script>';
