@@ -70,7 +70,7 @@
     }
  }
  ?>
-  <nav class="navbar navbar-expand-lg bg-white navbar-light">
+<nav class="navbar navbar-expand-lg bg-white navbar-light">
     <!-- Brand -->
     <a class="navbar-brand" href="#"><img src="picture/CTISlogo.png" width="70" height="70" alt=""></a>
 
@@ -97,20 +97,24 @@
               <a class="nav-link" href="testOfficer.php">Manage Tester</a>
           </li>
         </ul>
-        <figure class="mr-3 mt-2">
-          <img src="picture/user.png" alt="user" width = 50 class="ml-lg-5"/>
-          <figcaption>
-             <?php
+        <div class="dropdown">
+          <figure class="my-0">
+            <img src="picture/user.png" alt="user" width = 50 class="ml-5"/>
+          </figure>
+          <button class="btn btn-inline dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <?php
               echo $_SESSION['userID'];
               echo '('.$_SESSION['centreID'].')';
             ?>
-          </figcaption>
-        </figure>
-        
-        <form action="functionPHP/logout.php">  
-          <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
-        
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownUser">
+            
+            <a class="dropdown-item" href="functionPHP/changePassword.php">Change Password</a>
+            <form class="dropdown-item"  action="functionPHP/logout.php">  
+            <button type="submit" class="btn btn-danger">Log Out</button>
+            </form>
+          </div>
+        </div>        
     </div>
 </nav>
   <h1 class="text-center text-white bg-primary display-4">Tester Registration</h1>

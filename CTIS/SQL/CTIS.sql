@@ -79,6 +79,14 @@ CONSTRAINT test_fk1 FOREIGN KEY (patUsername) REFERENCES PATIENT (patUsername) O
 CONSTRAINT test_fk2 FOREIGN KEY(centreID) REFERENCES TEST_CENTRE(centreID) ON UPDATE CASCADE
 );
 
+/* Table for record the contact message */
+CREATE TABLE CONTACT(
+email VARCHAR(50) NOT NULL,
+name VARCHAR(50) NOT NULL,
+message TEXT NOT NULL,
+msgDate DATETIME NOT NULL
+);
+
 /*Insert some dummy datas*/
 INSERT INTO TEST_CENTRE (centreID,centreName) VALUES ('C0001','Ali Test Centre');
 INSERT INTO TEST_CENTRE (centreID) VALUES ('C0002');

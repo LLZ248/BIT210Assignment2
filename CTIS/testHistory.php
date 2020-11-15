@@ -63,20 +63,25 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="testHistory.html">Test History</a>
+              <a class="nav-link" href="testHistory.php">Test History</a>
             </li>
           </ul>
-          <figure class="mr-3 mt-2">
-          <img src="picture/user.png" alt="user" width = 50 />
-          <figcaption>
-             <?php
-              echo $_SESSION['userID'];
-            ?>
-          </figcaption>
-        </figure>
-          <form action="functionPHP/logout.php">  
-          <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
+          <div class="dropdown mr-4">
+            <figure class="my-0">
+              <img src="picture/user.png" alt="user" width = 50 class="ml-5"/>
+            </figure>
+            <button class="btn dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?php
+                echo $_SESSION['userID'];
+              ?>
+            </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownUser">
+                <a class="dropdown-item" href="functionPHP/changePassword.php">Change Password</a>
+                  <form class="dropdown-item"  action="functionPHP/logout.php">  
+                    <button type="submit" class="btn btn-danger">Log Out</button>
+                  </form>
+              </div>
+          </div> 
         </div>
   </nav>
   <!--Header-->
