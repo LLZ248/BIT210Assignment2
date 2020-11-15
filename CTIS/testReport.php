@@ -297,7 +297,7 @@
         <div class="modal-content">
     
           <!-- Modal Header -->
-          <form id="test-form" Method="GET" action="recordTest.php">
+          <form id="test-form" Method="GET" action="functionPHP/recordTest.php">
           <div class="modal-header">
             <h4 class="modal-title">Test Information</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
