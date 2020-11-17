@@ -79,7 +79,7 @@
           <figure class="my-0">
             <img src="picture/user.png" alt="user" width = 50 class="ml-5"/>
           </figure>
-          <button class="btn btn-inline dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <?php
               echo $_SESSION['userID'];
               echo '('.$_SESSION['centreID'].')';
@@ -110,8 +110,11 @@
         </tr>
     </thead>
     <tbody>
-    <?php $sql = "SELECT * from CENTRE_OFFICER where position=0";
+    <?php 
+         $id=$_SESSION['centreID'];
+         $sql = "SELECT * from CENTRE_OFFICER where position=0 and centreID=:id";
          $query = $dbh -> prepare($sql);
+         $query->bindParam(':id',$id,PDO::PARAM_STR);
          $query->execute();
          $results=$query->fetchAll(PDO::FETCH_OBJ);
          if($query->rowCount() > 0)

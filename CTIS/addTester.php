@@ -97,7 +97,7 @@
           <figure class="my-0">
             <img src="picture/user.png" alt="user" width = 50 class="ml-5"/>
           </figure>
-          <button class="btn btn-inline dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn dropdown-toggle" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <?php
               echo $_SESSION['userID'];
               echo '('.$_SESSION['centreID'].')';
