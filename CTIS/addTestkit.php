@@ -128,7 +128,7 @@
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tester's Detail</h4>
+                  <h4 class="card-title">Testkit's Detail</h4>
                     <form method="post">
                     <div class="succWrap"><?php echo htmlentities($msg); ?> </div>
                        <div class="form-body">
@@ -138,7 +138,7 @@
                                   <div class="row">
                                     <div class="col-md-10">
                                       <div class="form-group">
-                                        <input type="text"  name="id" class="form-control" required maxlength="5">
+                                        <input type="text"  name="id" class="form-control" pattern="[A-Z0-9]{8,}" title="Min. 8 letters(Uppercases and numbers only)" required>
                                       </div>
                                     </div>
                                   </div>
@@ -149,7 +149,7 @@
                                   <div class="row">
                                     <div class="col-md-10">
                                       <div class="form-group">
-                                        <input type="text"  name="name" class="form-control" required>
+                                        <input type="text"  name="name" class="form-control" required pattern="[A-Z0-9]{5,}" title="Min. 5 letters(Uppercases and numbers only)">
                                       </div>
                                     </div>
                                   </div>

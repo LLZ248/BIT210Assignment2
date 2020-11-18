@@ -134,7 +134,7 @@
                                   <div class="row">
                                     <div class="col-md-10">
                                       <div class="form-group">
-                                        <input type="text"  name="uname" class="form-control" required maxlength="5">
+                                        <input type="text"  name="uname" class="form-control" pattern="[A-Za-z0-9]{6,}" title="Min. 6 letters" required>
                                       </div>
                                     </div>
                                   </div>
@@ -145,7 +145,7 @@
                                   <div class="row">
                                     <div class="col-md-10">
                                       <div class="form-group">
-                                        <input type="text"  name="name" class="form-control" required>
+                                        <input type="text"  name="name" class="form-control" pattern="[A-Za-z]{6,}" title="Min. 6 letters(Letters only)" required>
                                       </div>
                                     </div>
                                   </div>
@@ -156,7 +156,7 @@
                                   <div class="row">
                                     <div class="col-md-10">
                                       <div class="form-group">
-                                        <input type="password"  name="pwd" class="form-control" required min="6">
+                                        <input type="password"  name="pwd" class="form-control" pattern="[A-Za-z0-9]{6,}" title="Min. 6 letters" required>
                                       </div>
                                     </div>
                                   </div>
