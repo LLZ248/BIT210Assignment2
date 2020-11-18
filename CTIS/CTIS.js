@@ -10,7 +10,7 @@ function showManagerPages(userType){
 }
 
 function generateTestTable(){//generate the patient table which list the test details
-  for(i=0;i<testList.length;i+=1){
+    for (i = 0; i < testList.length; i += 1){
     // initialsing the variables
     var testID = testList[i]["testID"];
     var testdate = testList[i]["testDate"];
@@ -383,19 +383,80 @@ function sortTableTK(n) {
 
 
 /*functions for Test History Page*/
-function generatePatientTableForPatient(targetpatUserName){
-  for(i=0;i<testList.length;i++){
+function generatePatientTableForPatient(targetpatUserName) {
+    for (i = 0; i < testList.length; i++){
     var patusername = testList[i]["patUserName"];
-    if (patusername == targetpatUserName){
+      if (patusername == targetpatUserName) {
+      var testID = testList[i]["testID"];
       var testdate = testList[i]["testDate"];
-      var patupswd = testList[i]["patUserPassword"];
-      var patname = testList[i]["patName"];
       var pattype = testList[i]["patType"];
       var patsymptom = testList[i]["patSymptom"];
-      appendTest(patusername,patupswd,patname,pattype,patsymptom,testdate);
+      appendTestPatient(testID,patusername,pattype,patsymptom,testdate);
       break;
     }
   }
+}
+
+//append test with pending status
+function appendTestPatient(testID, patUsername,patType, symptom, testDate) {
+    var username = patUsername;
+    var type = patType;
+    var testId = testID;
+
+
+    let tbody = document.getElementsByTagName("tbody")[0];
+    let row = tbody.insertRow(tbody.length);
+
+    testIdcell = row.insertCell(0);
+    testIdcell.innerHTML = testId;
+    datecell = row.insertCell(1);
+    var day = testDate.getDate();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    var month = testDate.getMonth()
+    if (month < 10) {
+        month = "0" + month;
+    }
+    datecell.innerHTML = testDate.getFullYear() + " " + month + " " + day;
+    patusernamecell = row.insertCell(2);
+    patusernamecell.innerHTML = username;
+    patTypecell = row.insertCell(3);
+    patTypecell.innerHTML = type;
+    symptomcell = row.insertCell(4);
+    symptomcell.innerHTML = symptom;
+    resultDatecell = row.insertCell(5);
+    resultDatecell.innerHTML = "-";
+    resultcell = row.insertCell(6);
+    resultcell.innerHTML = "-";
+    statuscell = row.insertCell(7);
+    statuscell.innerHTML = "pending"
+    viewcell = row.insertCell(8);
+    var viewBtn = document.createElement("button");
+    viewBtn.setAttribute("class", "btn btn-danger");
+    viewBtn.innerHTML = "view";
+    viewBtn.setAttribute("onclick", "displayTestModalP(\"" + testId + "\")");
+    viewcell.appendChild(viewBtn);
+
+}
+function displayTestModalP(testId) {
+    let tbody = document.getElementsByTagName("tbody")[0];
+    testlist = tbody.rows;
+    for (i = 0; i < testlist.length; i++) {
+        if (testlist[i].cells[0].innerHTML == testId) {// match testID
+            //replace the content
+            document.getElementById("test-modal-testId").innerHTML = testlist[i].cells[0].innerHTML;
+            document.getElementById('test-modal-testDate').innerHTML = testlist[i].cells[1].innerHTML;
+            document.getElementById('test-modal-patUsername').innerHTML = testlist[i].cells[2].innerHTML;
+            document.getElementById('test-modal-patType').innerHTML = testlist[i].cells[3].innerHTML;
+            document.getElementById('test-modal-symptoms').innerHTML = testlist[i].cells[4].innerHTML;
+            document.getElementById('test-modal-resultDate').innerHTML = testlist[i].cells[5].innerHTML;
+            document.getElementById('test-modal-result').innerHTML = testlist[i].cells[6].innerHTML;
+            document.getElementById('test-modal-status').innerHTML = testlist[i].cells[7].innerHTML;
+            break;
+        }
+    }
+    $('#test-modal').modal();//activate the test modal
 }
 /*functions for Test History Page*/
 
