@@ -91,6 +91,15 @@ html, body {
 }
 /* For Test Record Page */
 
+#history-table tr td:nth-child(0), #history-table th:nth-child(0),
+#history-table tr td:nth-child(2), #history-table th:nth-child(2),
+#history-table tr td:nth-child(3), #history-table th:nth-child(3),
+#history-table tr td:nth-child(4), #history-table th:nth-child(4),
+#history-table tr td:nth-child(5), #history-table th:nth-child(5),
+#history-table tr td:nth-child(6), #history-table th:nth-child(6),
+#history-table tr td:nth-child(8), #history-table th:nth-child(8) {
+    display: none;
+}
 
 /* For Test Kit Page */
 .tk-name-header {
@@ -193,6 +202,16 @@ html, body {
     }
     /* For Test Record Page */
 
+
+    #history-table tr td:nth-child(0), #history-table th:nth-child(0),
+    #history-table tr td:nth-child(2), #history-table th:nth-child(2),
+    #history-table tr td:nth-child(3), #history-table th:nth-child(3),
+    #history-table tr td:nth-child(4), #history-table th:nth-child(4),
+    #history-table tr td:nth-child(5), #history-table th:nth-child(5),
+    #history-table tr td:nth-child(6), #history-table th:nth-child(6),
+    #history-table tr td:nth-child(8), #history-table th:nth-child(8) {
+        display: table-cell;
+    }
 
     /* For Test Record Page */
     #tk-table tr td:nth-child(3), #tk-table-header th:nth-child(3),

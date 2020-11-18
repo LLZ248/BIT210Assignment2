@@ -14,7 +14,7 @@
     <!-- CTIS CSS & JS-->
     <link rel="stylesheet" href="CTIS.css">
     <script src="CTIS.js"></script>
-    <title>CTIS Test History</title>
+    <title>CTIS</title>
 
     <!--Icon-->
     <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
@@ -59,8 +59,8 @@
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-  
-  $sql =  "SELECT * FROM test WHERE patUsername='JERN0414'";
+  $name = $_SESSION['userID'];
+  $sql =  "SELECT * FROM test WHERE patUsername='$name'";
  
   $result = $conn->query($sql);
 
@@ -271,22 +271,22 @@
   </div>
   
   <!--Test table that display the details of the test that the patient has been taken-->
-  <table id="patient-table" class="table table-striped table-bordered bg-white">
+  <table id="history-table" class="table table-striped table-bordered bg-white">
     <thead class="thead-dark">
       <tr>
-        <th class="th-sm">TestID
+        <th class="th-sm" onclick="sortTable(0)" style="cursor: pointer;">TestID
         </th>
-        <th class="th-sm">Date
+        <th class="th-sm" onclick="sortTable(1)" style="cursor: pointer;">Date
         </th>
-        <th class="th-sm">Patient Username
+        <th class="th-sm" onclick="sortTable(2)" style="cursor: pointer;">Patient Username
         </th>
-        <th class="th-sm">Patient Type
+        <th class="th-sm" onclick="sortTable(3)" style="cursor: pointer;">Patient Type
         </th>
-        <th class="th-sm">Symptoms
+        <th class="th-sm" >Symptoms
         </th>
-        <th class="th-sm">Result Date
+        <th class="th-sm" onclick="sortTable(5)" style="cursor: pointer;">Result Date
         </th>
-        <th class="th-sm">Result
+        <th class="th-sm" onclick="sortTable(6)" style="cursor: pointer;">Result
         </th>
         <th class="th-sm">Status
         </th>
