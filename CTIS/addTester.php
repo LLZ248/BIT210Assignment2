@@ -41,11 +41,18 @@
   include('config.php');
   $msg = "";
  if(isset($_POST['register']))
- {
+ { 
+ 
+    
     $id=$_SESSION['centreID'];
     $name=$_POST['name'];
     $uname=$_POST['uname'];
     $pwd=$_POST['pwd'];
+    if($name==null||$name==" "||$uname==null||$uname==" "||$pwd==null||$pwd==" "){
+    echo'<script>alert("There is an empty variable!"); 
+    window.location.href="addTester.php";</script>';
+    }
+    else{
     $sql="SELECT officerName FROM CENTRE_OFFICER WHERE officerID=:uname";
     $query = $dbh->prepare($sql);
     $query->bindParam(':uname',$uname,PDO::PARAM_STR);
@@ -63,6 +70,7 @@
     $query->bindParam(':id',$id,PDO::PARAM_STR);
     $query->execute();
     $msg="Registered Successfully";
+    }
     }
  }
  ?>

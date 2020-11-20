@@ -47,6 +47,12 @@
     $kitId=$_POST['id'];
     $name=$_POST['name'];
     $stock=$_POST['stock'];
+    echo $name;
+    if($name==null||$name==" "||$kitId==null||$kitId==" "||$stock==null||$stock==" "){
+    echo'<script>alert("There is an empty variable!"); 
+    window.location.href="addTestkit.php";</script>';
+    }
+    else{
     $sql="SELECT * FROM testkit WHERE kitID=:id";
     $query = $dbh->prepare($sql);
     $query->bindParam(':id',$kitId,PDO::PARAM_STR);
@@ -67,6 +73,7 @@
     $query->bindParam(':stock',$stock,PDO::PARAM_STR);
     $query->execute();
     $msg="Added Successfully";
+    }
     }
  }
  ?>
